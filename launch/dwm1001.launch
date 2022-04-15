@@ -1,6 +1,6 @@
 <launch>
 
-    <!--Exctract info from dwm1001 dev boards, filter them and publish them into topics-->
+    <!--Exctract info from dwm1001 dev boards, filter them and publish them into topics, launch-prefix="sudo" -->
     <node pkg="localizer_dwm1001" type="dwm1001_main.py" name="localizer_dwm1001" output="screen">
 
         <param name="serial_port_name"      value="/dev/ttyACM0" /> <!-- Name of serial port -->

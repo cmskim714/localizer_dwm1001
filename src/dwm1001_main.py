@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ For more info on the documentation go to https://www.decawave.com/sites/default/files/dwm1001-api-guide.pdf
 """
+import rospy
 
 from dwm1001_systemDefinitions import SYS_DEFS
 
@@ -11,7 +12,9 @@ __email__      = SYS_DEFS.EMAIL
 __status__     = SYS_DEFS.STATUS
 
 
-import rospy, time, serial, os
+import time 
+import serial
+import os
 from dwm1001_apiCommands            import DWM1001_API_COMMANDS
 from dynamic_reconfigure.server     import Server
 from localizer_dwm1001.cfg          import DWM1001_Tune_SerialConfig
@@ -111,7 +114,7 @@ class dwm1001_localizer:
             serialPortDWM1001.write(DWM1001_API_COMMANDS.RESET)
             serialPortDWM1001.write(DWM1001_API_COMMANDS.SINGLE_ENTER)
             rate.sleep()
-            if "reset" in serialReadLine:
+            if b'reset' in serialReadLine:
                 rospy.loginfo("succesfully closed ")
                 serialPortDWM1001.close()
 
@@ -125,7 +128,10 @@ class dwm1001_localizer:
 
         """
 
-        arrayFromUSBFormatted = [x.strip() for x in dataFromUSB.strip().split(',')]
+        arrayFromUSBFormatted = [x.strip() for x in dataFromUSB.strip().split(b',')]
+        
+
+
 
         return arrayFromUSBFormatted
 
@@ -143,7 +149,7 @@ class dwm1001_localizer:
         for network in networkDataArray:
 
             # check if there is any entry starting with AN, which means there is an anchor
-            if 'AN' in network:
+            if b'AN' in network:
                 # get the number after'AN' which we will use to pubblish topics, example /dwm1001/anchor1
                 temp_anchor_number = networkDataArray[networkDataArray.index(network)]
                 # construct the object for anchor(s)
@@ -166,7 +172,7 @@ class dwm1001_localizer:
                               + " z: "
                               + str(anchor.z))
 
-            elif 'POS' in network:
+            elif b'POS' in network:
 
                 # construct the object for the tag
                 tag = Tag(float(networkDataArray[networkDataArray.index(network) + 1]),
