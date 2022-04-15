@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>localizer_dwm1001</name>
-  <version>1.0.0</version>
+  <version>1.0.0</version> 
   <description>The localizer_dwm1001 package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
