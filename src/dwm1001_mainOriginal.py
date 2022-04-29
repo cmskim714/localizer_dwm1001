@@ -49,8 +49,6 @@ serialPortDWM1001 = serial.Serial(
     bytesize=SYS_DEFS.bytesize
 )
 
-# tagTopic = str(rospy.get_param('~tag_topic'))
-tagTopic = 'tag_right_rear'
 
 class dwm1001_localizer:
 
@@ -182,7 +180,7 @@ class dwm1001_localizer:
                           float(networkDataArray[networkDataArray.index(network) + 3]),)
 
                 # publish tag
-                pub_anchor = rospy.Publisher(tagTopic, Tag, queue_size=1)
+                pub_anchor = rospy.Publisher('/dwm1001/tag', Tag, queue_size=1)
                 pub_anchor.publish(tag)
 
                 rospy.loginfo("Tag: "
